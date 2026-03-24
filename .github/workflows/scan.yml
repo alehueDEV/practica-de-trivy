@@ -7,25 +7,21 @@
 
 name: Security - Docker - Scan
 
-on: [pull_request] #
-
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ updates ]
 
 jobs:
   scan:
     name: Escanear Docker Imágenes
-    runs-on: ubuntu-latest #
-
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Permitir acceso repositorio #
-
-
+      - name: Permitir acceso repositorio
         uses: actions/checkout@v2
 
-      - name: Instalar Trivy
-        run: |
-          bash install.sh
-
-      - name: Ejecutar escáner de Trivy
-        run: |
-          bash docker-scan.sh 
+      - name: Forzar Fallo de Seguridad
+        run: exit 1
